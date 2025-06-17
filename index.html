@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Webhook API Tester</title>
+  <style>
+    body { font-family: Arial; padding: 20px; background: #f4f4f4; }
+    input, button { padding: 10px; margin: 5px 0; width: 100%; max-width: 500px; }
+    pre { background: #fff; padding: 10px; border: 1px solid #ccc; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <h2>Test Webhook API</h2>
+  <input type="text" id="apiUrl" placeholder="Enter API Endpoint URL">
+  <input type="text" id="email" placeholder="Enter Your Email">
+  <button onclick="runTest()">Test API</button>
+
+  <h3>Result:</h3>
+  <pre id="result">No test run yet.</pre>
+
+  <script>
+    async function runTest() {
+      const url = document.getElementById("apiUrl").value;
+      const email = document.getElementById("email").value;
+      const fullUrl = `https://yhxzjyykdsfkdrmdxgho.supabase.co/functions/v1/junior-dev?url=${encodeURIComponent(url)}&email=${encodeURIComponent(email)}`;
+
+      document.getElementById("result").textContent = "Testing...";
+      try {
+        const res = await fetch(fullUrl);
+        const data = await res.json();
+        document.getElementById("result").textContent = JSON.stringify(data, null, 2);
+      } catch (err) {
+        document.getElementById("result").textContent = "Error: " + err.message;
+      }
+    }
+  </script>
+</body>
+</html>
